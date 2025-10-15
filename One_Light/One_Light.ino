@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 <<<<<<< HEAD:One_Light/One_Light.ino
+=======
+>>>>>>> origin/Aditya_Branch
 /*
   Blink
 
@@ -42,9 +45,10 @@ void loop() {
   }
   
 }
+<<<<<<< HEAD
 
 // Nadin was here!
 
 // Darren Ravichandra commit
 
-
+//Aditya 
