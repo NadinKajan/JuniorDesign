@@ -2,49 +2,63 @@
 <<<<<<< HEAD:One_Light/One_Light.ino
 =======
 >>>>>>> origin/Aditya_Branch
-/*
-  Blink
 
-  Turns an LED on for one second, then off for one second, repeatedly.
+//global variable
+int t = 1000; // delay time, decreases with more correct inputs
+int PotentiometerStartValue = 0;
+int PotentiometerLastValue = 0;
+const int potentiometerChange = 20;
 
-  Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO
-  it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to
-  the correct LED pin independent of which board is used.
-  If you want to know what pin the on-board LED is connected to on your Arduino
-  model, check the Technical Specs of your board at:
-  https://docs.arduino.cc/hardware/
-
-  modified 8 May 2014
-  by Scott Fitzgerald
-  modified 2 Sep 2016
-  by Arturo Guadalupi
-  modified 8 Sep 2016
-  by Colby Newman
-
-  This example code is in the public domain.
-
-  https://docs.arduino.cc/built-in-examples/basics/Blink/
-*/
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(8, OUTPUT);
-  pinMode(2, INPUT); // button
+
+  // User Inputs
+  pinMode(1, INPUT_PULLUP); // button 
+  pinMode(2, INPUT_PULLUP); // switch up 
+  pinMode(3, INPUT_PULLUP); // switch down 
+  pinMode(4, INPUT); // wheel, ********might need to be removed because were using A0 to read inputs on potentiometer*****
+
+  // LED Outputs
+  pinMode(6, OUTPUT); // button LED
+  pinMode(7, OUTPUT); // switch LED
+  pinMode(8, OUTPUT); // wheel LED
+
+  // Potentiometer setup
+  int PotentiometerStartValue = analogRead(A0);
+  PotentiometerLastValue = PotentiometerStartValue; 
 }
 
 // the loop function runs over and over again forever
 void loop() {
-  if (digitalRead(2) == HIGH){        // if button is pressed
-    digitalWrite(8, HIGH);
-    delay(1000);                      // wait for a second
-    digitalWrite(8, LOW);
-    delay(1000);                      // wait for a second
-  } else{
-    digitalWrite(8, LOW);
+    //button input
+  if (digitalRead(1) == LOW){
+    digitalWrite(6, HIGH);
+  } else {
+    delay(t);
+    digitalWrite(6,LOW);
   }
-  
-}
+
+    //switch input
+  if(digitalRead(2) == LOW || digitalRead(3) == LOW){
+    digitalWrite(7, HIGH);
+  } else {
+    delay(t);
+    digitalWrite(7, LOW);
+  }
+
+  //potentiometer input
+  int potentiometerCurrentValue = analogRead(A0);
+  if(abs(PotentiometerStartValue - PotentiometerLastValue) > potentiometerChange) {
+    digitalWrite(8, HIGH);
+    PotentiometerLastValue = potentiometerCurrentValue; // setting the potentiometer last value to the current value
+  } else {
+    delay(t);
+    digitalWrite(8, LOW); // turn off LED if no input was detected or change wasnt enough
+  }
+
+  delay(t);
+  }
 <<<<<<< HEAD
 
 // Nadin was here!
