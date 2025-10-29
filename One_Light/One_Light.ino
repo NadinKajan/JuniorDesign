@@ -1,5 +1,4 @@
 // Global Variables
-// ----------------------
 int t = 1000; // delay time, decreases with more correct inputs
 int PotentiometerStartValue = 0;
 int PotentiometerLastValue = 0;
@@ -11,9 +10,6 @@ const int SWITCH_DOWN_PIN = 3;
 
 int lastButtonState = HIGH; // stores previous state of button (for edge detection)
 
-// ----------------------
-// Setup Function
-// ----------------------
 void setup() {
   // User Inputs
   pinMode(4, INPUT_PULLUP); // button
@@ -38,12 +34,8 @@ void setup() {
   }
 }
 
-// ----------------------
-// Main Loop Function
-// ----------------------
 void loop() {
-  // --- BUTTON INPUT (Detect press, not hold) ---
-  int currentButtonState = digitalRead(4);
+  int currentButtonState = digitalRead(4); //BUTTON INPUT (Detect press, not hold)
 
   // Detect transition from HIGH → LOW (unpressed → pressed)
   if (lastButtonState == HIGH && currentButtonState == LOW) {
@@ -53,9 +45,8 @@ void loop() {
   }
 
   lastButtonState = currentButtonState; // update button state
-
-  // --- SWITCH INPUT (Detects change between up/down) ---
-  int currentActivePin = 0;
+  
+  int currentActivePin = 0; //SWITCH INPUT (Detects change between up/down) 
   int pin2State = digitalRead(SWITCH_UP_PIN);
   int pin3State = digitalRead(SWITCH_DOWN_PIN);
 
@@ -74,7 +65,7 @@ void loop() {
     SwitchLastActivePin = currentActivePin; // update position
   }
 
-  // --- POTENTIOMETER INPUT ---
+  //POTENTIOMETER INPUT 
   int potentiometerCurrentValue = analogRead(A0);
   if (abs(potentiometerCurrentValue - PotentiometerLastValue) > potentiometerChange) {
     digitalWrite(8, HIGH);               // LED on for noticeable change
